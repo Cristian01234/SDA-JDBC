@@ -6,7 +6,7 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 public class DepartmentRepository
 {
-    public Department findById(String id)
+    public Department findById(Integer id)
     {
         Session session = SessionManager.getSessionFactory().openSession();
         //The find method returns the object with the provided id
@@ -14,12 +14,10 @@ public class DepartmentRepository
         session.close();
         return department;
     }
-    public void save(String departmentName)
+    public void save(Department department)
     {
         Session session = SessionManager.getSessionFactory().openSession();
         Transaction transaction = session.beginTransaction();
-        Department department = new Department();
-        department.setName(departmentName);
         //The save method persists the object to the database
         session.save(department);
         transaction.commit();

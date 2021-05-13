@@ -1,6 +1,8 @@
 package com.sda.cristiardelean.hibernate.model;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "project")
@@ -31,6 +33,22 @@ public class Project {
         this.name = name;
     }
 
+    @ManyToMany(mappedBy = "projects")
+    private Set<Employee> employees = new HashSet<>();
 
+    public Set<Employee> getEmployees() {
+        return employees;
+    }
 
+    public void setEmployees(Set<Employee> employees) {
+        this.employees = employees;
+    }
+
+    @Override
+    public String toString() {
+        return "Project{" +
+                "projectId=" + projectId +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

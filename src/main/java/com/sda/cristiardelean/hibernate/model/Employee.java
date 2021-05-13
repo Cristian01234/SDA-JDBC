@@ -2,7 +2,10 @@ package com.sda.cristiardelean.hibernate.model;
 
 
 import javax.persistence.*;
-    @Entity
+import java.util.HashSet;
+import java.util.Set;
+
+@Entity
     @Table(name="employees")
     public class Employee {
         @Id
@@ -21,12 +24,36 @@ import javax.persistence.*;
         private String email;
         @Column(name = "salary")
         private Integer salary;
-        @Column(name = "departmentId")
-        private Integer departmentId;
-        @Column(name = "managerId")
-        private Integer managerId;
 
-        public Integer getEmployeeId() {
+
+/*        @OneToOne
+        @JoinColumn(name = "account_id") // se duce pe baza de date
+        private Account account;*/
+        @ManyToOne
+        @JoinColumn(name = "departmentId")
+        private Department department;
+        @ManyToMany
+        @JoinTable(name = "employees_project")
+
+        private Set<Project> projects = new HashSet<>();
+
+    public Set<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(Set<Project> projects) {
+        this.projects = projects;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
+    }
+
+    public Integer getEmployeeId() {
             return employeeId;
         }
 
@@ -82,20 +109,17 @@ import javax.persistence.*;
             this.salary = salary;
         }
 
-        public Integer getDepartmentId() {
-            return departmentId;
-        }
-
-        public void setDepartmentId(Integer departmentId) {
-            this.departmentId = departmentId;
-        }
-
-        public Integer getManagerId() {
-            return managerId;
-        }
-
-        public void setManagerId(Integer managerId) {
-            this.managerId = managerId;
+        @Override
+        public String toString() {
+            return "Employee{" +
+                    "employeeId=" + employeeId +
+                    ", firstName='" + firstName + '\'' +
+                    ", lastName='" + lastName + '\'' +
+                    ", dateOfBirth=" + dateOfBirth +
+                    ", phoneNumber='" + phoneNumber + '\'' +
+                    ", email='" + email + '\'' +
+                    ", salary=" + salary +
+                    '}';
         }
     }
 
